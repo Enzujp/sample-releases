@@ -1,0 +1,14 @@
+name: Release Contrib
+
+on:
+  push:
+    tags: ["v*"]
+
+jobs:
+  release:
+    name: Release Contrib
+    uses: ./.github/workflows/goreleaser.yaml
+    with:
+      distribution: otelcol-contrib
+    secrets: inherit
+    permissions: write-all
