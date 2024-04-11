@@ -1,4 +1,4 @@
-name: goreleaser
+name: Reusable release workflow
 
 on:
   workflow_call:
@@ -21,7 +21,9 @@ jobs:
     steps:      
       - name: Checkout repository
         uses: actions/checkout@v2
-      
+        with:
+          fetch-depth: 0
+        
   goreleaser:
     runs-on: ubuntu-latest
     steps:
@@ -29,15 +31,25 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      
+
       - name: Set up Go
         uses: actions/setup-go@v4
-      
+
+      - name: Install goreleaser
+        run: go install github.com/goreleaser/goreleaser@latest
+
+      - name: Generate Release Notes
+        run: |
+          goreleaser r --release-header-tmpl=release.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v5
-        with:
+        with: 
           distribution: goreleaser
           version: latest
+          workdir: distributions/${{ inputs.distribution }}
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
