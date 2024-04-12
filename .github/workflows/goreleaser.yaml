@@ -40,7 +40,7 @@ jobs:
 
       - name: Generate Release Notes
         run: |
-          goreleaser r --release-header-tmpl=release.md
+          goreleaser release --release-header-tmpl=release.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
