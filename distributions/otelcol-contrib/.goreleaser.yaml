@@ -1,5 +1,3 @@
-partial:
-  by: target
 project_name: opentelemetry-collector-releases
 env:
   - COSIGN_YES=true
@@ -31,24 +29,4 @@ builds:
         goarch: arm64
       - goos: windows
         goarch: s390x
-    dir: _build
-    binary: otelcol-contrib
-archives:
-  - id: otelcol
-    builds:
-      - otelcol
-    name_template: '{{ .Binary }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}{{ if .Mips }}_{{ .Mips }}{{ end }}'
-checksum:
-  name_template: '{{ .ProjectName }}_otelcol_checksums.txt'
-signs:
-  - cmd: cosign
-    args:
-      - sign-blob
-      - --output-signature
-      - ${artifact}.sig
-      - --output-certificate
-      - ${artifact}.pem
-      - ${artifact}
-    signature: ${artifact}.sig
-    artifacts: all
-    certificate: ${artifact}.pem
+    

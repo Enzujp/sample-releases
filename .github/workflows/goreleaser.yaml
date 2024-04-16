@@ -63,6 +63,6 @@ jobs:
           distribution: goreleaser
           version: latest
           workdir: distributions/otelcol-contrib
-          args: release --clean --release-header-tmpl=../release.md
+          args: release --clean --release-header-tmpl=../../release.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
