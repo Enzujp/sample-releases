@@ -35,14 +35,6 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
 
-      - name: Install goreleaser
-        run: go install github.com/goreleaser/goreleaser@latest
-
-      - name: Generate Release Notes
-        run: |
-          goreleaser release --release-header-tmpl=release.md
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v5
@@ -50,6 +42,6 @@ jobs:
           distribution: goreleaser
           version: latest
           workdir: distributions/${{ inputs.distribution }}
-          args: release --clean
+          args: release --clean --release-header-tmpl=../release.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
