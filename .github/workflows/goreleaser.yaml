@@ -42,27 +42,6 @@ jobs:
           distribution: goreleaser
           version: latest
           workdir: distributions/${{ inputs.distribution }}
-          args: release --clean --release-header-tmpl=../release.md
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  goreleaser-2:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Set up Go
-        uses: actions/setup-go@v4
-
-
-      - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v5
-        with: 
-          distribution: goreleaser
-          version: latest
-          workdir: distributions/otelcol-contrib
-          args: release --clean --release-header-tmpl=../../release.md
+          args: release --clean --release-header-tmpl=../.github/release-template.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
